@@ -1,0 +1,12 @@
+node_modules/
+build/
+*.log
+*.log*
+
+// environment variables
+.env
+.env.development
+.env.production
+
+// webpack bundle analyzer report file
+/report.html
