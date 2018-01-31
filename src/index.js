@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { configureStore } from './store';
-import App from 'modules/App';
+import Threads from 'screens/threads';
+import rootReducer from './store/rootReducer';
 import './polyfills';
 
 if (module.hot) {
@@ -13,7 +15,11 @@ if (module.hot) {
 
 ReactDOM.render(
   <Provider store={configureStore()}>
-    <App />
+    <main className="container">
+      <Router>
+        <Route path='/' exact component={Threads}></Route>
+      </Router>
+    </main>
   </Provider>,
   document.querySelector('.container')
 )

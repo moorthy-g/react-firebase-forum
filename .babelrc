@@ -1,10 +1,27 @@
 {
   "presets": [
-    [ "es2015", { "modules": false } ],
+    "env",
+    "stage-2",
     "react"
   ],
   "plugins": [
     "react-hot-loader/babel",
     "syntax-dynamic-import"
-  ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        ["react-css-modules",{
+          "generateScopedName": "[local]_[hash:base64:5]"
+        }]
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["react-css-modules",{
+          "generateScopedName": "[hash:base64:10]"
+        }]
+      ]
+    }
+  }
 }

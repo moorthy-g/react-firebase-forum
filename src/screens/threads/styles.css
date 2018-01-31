@@ -1,0 +1,14 @@
+.thread-item {
+  background: #fdfdfd;
+  cursor: pointer;
+}
+
+.thread-item:hover {
+  background: #eee;
+}
+.user {
+  color: #666;
+  font-size: 13px;
+  font-weight: normal;
+  text-align: right;
+}

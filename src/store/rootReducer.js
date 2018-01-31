@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import secondsReducer from 'components/seconds/ducks';
+import { threadsReducer, NAME as threadsState } from 'screens/threads';
 
 export default combineReducers({
-  seconds: secondsReducer
-})
+  [threadsState]: threadsReducer
+});
