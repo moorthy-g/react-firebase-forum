@@ -161,6 +161,7 @@ module.exports = {
 
   output: {
     path: buildDirectory,
+    publicPath: '/',
     //HMR requires [hash]. It doesn't work with [chunkhash]
     filename: enableHMR
       ? 'js/[name].[hash:20].js'
@@ -196,6 +197,7 @@ module.exports = {
     disableHostCheck: true,
     inline: true,
     hot: enableHMR,
+    historyApiFallback: true,
     compress: true,
     stats: 'errors-only'
   },
