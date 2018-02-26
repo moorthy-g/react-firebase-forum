@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { threadsReducer, NAME as threadsState } from 'screens/threads';
+import { threadsReducer, STATE_NAME as threadsState } from 'screens/threads';
+import { singleThreadReducer, STATE_NAME as singleThreadState } from 'screens/single-thread';
 
 export default combineReducers({
-  [threadsState]: threadsReducer
+  [threadsState]: threadsReducer,
+  [singleThreadState]: singleThreadReducer
 });

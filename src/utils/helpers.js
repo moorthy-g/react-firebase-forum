@@ -25,3 +25,12 @@ export function copyObject(object) {
 export function updateObject(object, updates) {
   return Object.assign({}, object, updates);
 }
+
+export function reduceArrayToObject(objectArray){
+  return objectArray.reduce((accumulator,object) => Object.assign(accumulator, object), {});
+}
+
+export function getLastKey(object) {
+  for(var lastKey in object);
+  return lastKey;
+}

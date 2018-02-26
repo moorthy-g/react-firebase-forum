@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { configureStore } from './store';
 import Threads from 'screens/threads';
+import SingleThread from 'screens/single-thread';
 import rootReducer from './store/rootReducer';
 import './polyfills';
 
@@ -15,11 +16,12 @@ if (module.hot) {
 
 ReactDOM.render(
   <Provider store={configureStore()}>
-    <main className="container">
       <Router>
-        <Route path='/' exact component={Threads}></Route>
+        <main className="container">
+          <Route path='/' exact component={Threads}></Route>
+          <Route path='/thread/:id' exact component={SingleThread}></Route>
+        </main>
       </Router>
-    </main>
   </Provider>,
   document.querySelector('.container')
 )

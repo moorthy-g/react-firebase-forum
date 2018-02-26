@@ -28,6 +28,7 @@
     "es6-promise": "^4.2.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
+    "firebase": "^4.9.1",
     "html-webpack-plugin": "^2.30.1",
     "http-server": "^0.11.1",
     "less": "^2.7.3",

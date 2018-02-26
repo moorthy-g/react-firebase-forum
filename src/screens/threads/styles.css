@@ -1,11 +1,16 @@
 .thread-item {
   background: #fdfdfd;
-  cursor: pointer;
   transition: background-color 0.2s;
 }
-
 .thread-item:hover {
   background: #eee;
+}
+.thread-item a {
+  color: inherit;
+  text-decoration: none;
+}
+.thread-item a:hover {
+  color: #000;
 }
 .user {
   color: #666;
