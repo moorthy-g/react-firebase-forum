@@ -93,19 +93,6 @@ const plugins = [
           minifyURLs: true
         }
   }),
-  // extract all vendor chunks in node_modules to single file
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: function(module) {
-      return module.context && module.context.includes('node_modules')
-    }
-  }),
-  // To prevent longterm cache of vendor chunks
-  // extract a 'manifest' chunk, then include it to the app
-  new webpack.optimize.CommonsChunkPlugin({
-    name: 'manifest',
-    minChunks: Infinity
-  }),
   // Prevent importing all moment locales
   // You can remove this if you don't use Moment.js:
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
@@ -138,23 +125,15 @@ const devPlugins = enableHMR
   : new Array();
 
 const buildPlugins = [
-  new CleanWebpackPlugin(buildDirectory),
-  new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      drop_console: true,
-      warnings: false
-    },
-    mangle: {
-      safari10: true,
-    },
-    sourceMap: generateBuildSourceMap
-  })
+  new CleanWebpackPlugin(buildDirectory)
 ];
 
 let mainEntry = [path.resolve(__dirname, 'src/js/main')];
 isDevelopment && mainEntry.push('react-hot-loader/patch');
 
 module.exports = {
+  mode: isDevelopment ? 'development' : 'production',
+
   entry: {
     main: path.resolve(__dirname, 'src/index')
   },
@@ -175,6 +154,22 @@ module.exports = {
 
   module: {
     rules: rules
+  },
+
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: 'vendor'
+        }
+      }
+    },
+    runtimeChunk: {
+      name: 'manifest'
+    }
   },
 
   devtool: isDevelopment ? 'cheap-module-source-map' : generateBuildSourceMap ? 'source-map' : false,
