@@ -1,90 +1,57 @@
 import { updateObject, fetchAndNormalize, getLastKey } from 'utils/helpers';
+import { createReducer } from 'store/helpers';
 import * as api from 'api/firebase';
 
 //constants
-export const STATE_NAME = 'threads';
+export const STATE_KEY = 'threads';
+const threadsLimit = 10;
 
 // action types
-const GET_THREADS = 'THREADS/GET_THREADS';
-const GET_USERS = 'THREADS/GET_USERS';
-const LAST_THREAD_KEY = 'THREADS/LAST_THREAD_KEY';
-const FIRST_LOAD = 'THREADS/FIRST_LOAD';
-const LOADING = 'THREADS/LOADING';
-const FREEZE = 'THREADS/FREEZE';
+const types = {
+  GET_THREADS: 'THREADS/GET_THREADS',
+  GET_USERS: 'THREADS/GET_USERS',
+  LAST_THREAD_KEY: 'THREADS/LAST_THREAD_KEY',
+  FIRST_LOAD: 'THREADS/FIRST_LOAD',
+  LOADING: 'THREADS/LOADING',
+  FREEZE: 'THREADS/FREEZE',
+}
+
 
 // reducer
-const initialState = {
+export default createReducer({
   threadsById: {},
   usersById: {},
   lastKey: null,
   firstLoad: false,
   freeze: false, // Once all threads loaded, freeze
   loading: false
-};
+}, types);
 
-const reducers = {
-  [GET_THREADS]:
-  (state, action) => {
-    const threads = updateObject(state.threadsById, action.payload);
-    return updateObject(state, { threadsById: threads });
-  },
-  [GET_USERS]:
-  (state, action) => {
-    const users = updateObject(state.usersById, action.payload);
-    return updateObject(state, { usersById: users });
-  },
-  [FIRST_LOAD]:
-  (state, action) => {
-    return updateObject(state, { firstLoad: action.payload })
-  },
-  [LAST_THREAD_KEY]:
-  (state, action) => {
-    return updateObject(state, { lastKey: action.payload })
-  },
-  [LOADING]:
-  (state, action) => {
-    return updateObject(state, { loading: action.payload })
-  },
-  [FREEZE]:
-  (state, action) => {
-    return updateObject(state, { freeze: action.payload })
-  }
-}
-
-export default function(state = initialState, action) {
-  const actionType = reducers[action.type];
-  if(typeof actionType === 'function')
-    return actionType(state, action);
-  else
-    return state;
-}
 
 // action creators
-const threadsLimit = 10;
-
 function getThreads(loadNextSet=false) {
   return (dispatch, getState) => {
-    const state = getState()[STATE_NAME];
+    const state = getState()[STATE_KEY];
     if (!state.firstLoad || loadNextSet && !state.loading && !state.freeze) {
       const startValue = state.lastKey;
-      dispatch({ type: LOADING, payload: true });
+      dispatch({ type:types.LOADING, loading: true });
       api.getThreads(startValue, threadsLimit+1)
       .then(payload => {
         let lastKey = getLastKey(payload);
-        dispatch({ type: GET_THREADS, payload });
+        dispatch({ type: types.GET_THREADS, threadsById: payload });
         if(lastKey === state.lastKey) {
-          dispatch({ type: FREEZE, payload: true });
+          dispatch({ type: types.FREEZE, freeze: true });
         } else {
-          dispatch({ type: LAST_THREAD_KEY, payload: lastKey });
+          dispatch({ type: types.LAST_THREAD_KEY, lastKey });
         }
-        dispatch({ type: LOADING, payload: false });
-        (startValue === null) && dispatch({ type: FIRST_LOAD, payload: true });
+        dispatch({ type: types.LOADING, loading: false });
+        (startValue === null) && dispatch({ type: types.FIRST_LOAD, firstLoad: true });
         return payload;
       })
       .then(identifyNewUsersInThreads.bind(state))
       .then(api.getUsersList)
       .then(payload => {
-        dispatch({ type: GET_USERS, payload });
+        dispatch({ type: types.GET_USERS, usersById: payload });
       })
     }
   };

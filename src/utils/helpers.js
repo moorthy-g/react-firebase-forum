@@ -22,8 +22,10 @@ export function copyObject(object) {
   return Object.assign({}, object);
 }
 
-export function updateObject(object, updates) {
-  return Object.assign({}, object, updates);
+export function updateObject(...args) {
+  let state = Object.assign({}, ...args);
+  delete state.type;
+  return state;
 }
 
 export function reduceArrayToObject(objectArray){

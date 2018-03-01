@@ -1,5 +1,5 @@
 import ThreadsList from './components/ThreadsList';
-import threadsReducer, { actions, STATE_NAME } from './state';
+import reducer, { actions, STATE_KEY } from './state';
 
 export default ThreadsList;
-export { threadsReducer, actions, STATE_NAME };
+export { reducer, actions, STATE_KEY };

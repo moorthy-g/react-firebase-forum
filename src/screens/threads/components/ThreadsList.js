@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actions, selectors, STATE_NAME } from '../state';
+import { actions, selectors, STATE_KEY } from '../state';
 import ThreadItem from './ThreadItem';
 
 class ThreadsList extends Component {
@@ -41,7 +41,7 @@ class ThreadsList extends Component {
 }
 
 function mapStateToProps(state) {
-  return state[STATE_NAME]
+  return state[STATE_KEY]
 }
 
 export default connect(mapStateToProps, actions)(ThreadsList);
