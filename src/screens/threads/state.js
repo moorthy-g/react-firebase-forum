@@ -38,20 +38,19 @@ function getThreads(loadNextSet=false) {
       api.getThreads(startValue, threadsLimit+1)
       .then(payload => {
         let lastKey = getLastKey(payload);
-        dispatch({ type: types.GET_THREADS, threadsById: payload });
+        dispatch({ type: types.GET_THREADS, threadsById: updateObject(state.threadsById, payload), loading: false });
         if(lastKey === state.lastKey) {
           dispatch({ type: types.FREEZE, freeze: true });
         } else {
           dispatch({ type: types.LAST_THREAD_KEY, lastKey });
         }
-        dispatch({ type: types.LOADING, loading: false });
         (startValue === null) && dispatch({ type: types.FIRST_LOAD, firstLoad: true });
         return payload;
       })
       .then(identifyNewUsersInThreads.bind(state))
       .then(api.getUsersList)
       .then(payload => {
-        dispatch({ type: types.GET_USERS, usersById: payload });
+        dispatch({ type: types.GET_USERS, usersById: updateObject(state.usersById, payload) });
       })
     }
   };
