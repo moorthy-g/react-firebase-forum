@@ -31,8 +31,7 @@ class ThreadsList extends Component {
       <ul className='list-group threads-list my-5'>
         {Object.keys(threadsById).map(id => {
           let thread = threadsById[id];
-          let user = usersById[thread.user_id];
-          return <ThreadItem key={id} id={id} {...thread} user={user} />
+          return <ThreadItem key={id} id={id} {...thread} />
         })}
         { loading && <li className="list-group-item text-center">Loading...</li> }
       </ul>

@@ -12,20 +12,3 @@
 .thread-item a:hover {
   color: #000;
 }
-.user {
-  color: #666;
-  font-size: 13px;
-  font-weight: normal;
-  text-align: right;
-}
-.user img {
-  background: #eee;
-  border-radius: 50%;
-  vertical-align: middle;
-  width: 30px;
-  height: 30px;
-  margin: 0 5px;
-}
-.thread-item:hover .user img {
-  background: #fff;
-}

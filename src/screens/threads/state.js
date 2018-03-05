@@ -20,7 +20,6 @@ const types = {
 // reducer
 export default createReducer({
   threadsById: {},
-  usersById: {},
   lastKey: null,
   firstLoad: false,
   freeze: false, // Once all threads loaded, freeze
@@ -47,30 +46,12 @@ function getThreads(loadNextSet=false) {
         (startValue === null) && dispatch({ type: types.FIRST_LOAD, firstLoad: true });
         return payload;
       })
-      .then(identifyNewUsersInThreads.bind(state))
-      .then(api.getUsersList)
-      .then(payload => {
-        dispatch({ type: types.GET_USERS, usersById: updateObject(state.usersById, payload) });
-      })
     }
   };
 }
 
 function getMoreThreads() {
   return getThreads(true);
-}
-
-// action helpers
-function identifyNewUsersInThreads(threads) {
-  const usersState = this.usersById, newUserIds=[];
-  for (const key in threads) {
-    const userId = threads[key].user_id;
-    if(!(userId in usersState)) {
-      usersState[userId] = null;
-      newUserIds.push(userId);
-    }
-  }
-  return newUserIds;
 }
 
 export const actions = {

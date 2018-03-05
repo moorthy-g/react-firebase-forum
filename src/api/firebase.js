@@ -26,7 +26,7 @@ export function getThreads(start, limit) {
 
 export function getUser(userId) {
   return new Promise((resolve, reject) => {
-    const userRef = db.ref('users').child(userId);
+    const userRef = db.ref('users').orderByKey().equalTo(userId);
     userRef.once('value', snap => resolve(snap.val()));
   });
 }

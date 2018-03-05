@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import User from 'components/user';
 import { truncate } from 'utils/helpers';
 
 import styles from '../styles.css';
@@ -16,15 +17,7 @@ const ThreadItem = props => {
         <h4>{props.title.charAt(0).toUpperCase() + props.title.slice(1)}</h4>
         <p>{truncate(props.description)}</p>
       </Link>
-      {
-        props.user &&
-        <h6 styleName="user">
-          posted by{' '}
-          <Link to={`user/${props.user_id}`}>
-            <strong>{name}</strong> <img src={avatar}alt="" />
-          </Link>
-        </h6>
-      }
+      <User id={props.user_id} />
     </li>
   );
 };
