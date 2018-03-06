@@ -21,7 +21,7 @@ let newUserPromises = [], timeout;
 function getUser(id) {
   return (dispatch, getState) => {
     const state = getState()[STATE_KEY];
-    if(typeof state[id] !== 'object') {
+    if(typeof state.usersById[id] !== 'object') {
       //Collect all calls in current event loop
       //Then, return all users as batch in next event loop
       clearTimeout(timeout);
