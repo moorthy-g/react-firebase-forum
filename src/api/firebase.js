@@ -40,7 +40,7 @@ export function getUsersList(userIds) {
   return Promise.all(userPromises).then(users => reduceArrayToObject(users));
 }
 
-export function getThreadPosts(threadId) {
+export function getPosts(threadId) {
   return new Promise((resolve, reject) => {
     const postsRef = db.ref('posts').orderByChild('thread_id').equalTo(threadId);
     postsRef.once('value', snap => resolve(snap.val()));

@@ -1,0 +1,9 @@
+.single h1 {
+  font-size:2rem;
+}
+.single h1::first-letter {
+  text-transform: uppercase;
+}
+.user {
+  margin-bottom: 0;
+}
