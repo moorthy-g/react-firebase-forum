@@ -13,7 +13,7 @@ const ThreadItem = props => {
   }
   return (
     <li styleName="thread-item" className="list-group-item">
-      <Link to={`thread/${props.id}`}>
+      <Link to={`threads/${props.id}`}>
         <h4>{props.title.charAt(0).toUpperCase() + props.title.slice(1)}</h4>
         <p>{truncate(props.description)}</p>
       </Link>

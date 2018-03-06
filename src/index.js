@@ -19,7 +19,7 @@ ReactDOM.render(
       <Router>
         <main className="container">
           <Route path='/' exact component={Threads}></Route>
-          <Route path='/thread/:id' exact component={SingleThread}></Route>
+          <Route path='/threads/:id' exact component={SingleThread}></Route>
         </main>
       </Router>
   </Provider>,
