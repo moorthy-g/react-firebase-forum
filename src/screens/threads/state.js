@@ -9,13 +9,8 @@ const threadsLimit = 10;
 // action types
 const types = {
   GET_THREADS: 'THREADS/GET_THREADS',
-  GET_USERS: 'THREADS/GET_USERS',
-  LAST_THREAD_KEY: 'THREADS/LAST_THREAD_KEY',
-  FIRST_LOAD: 'THREADS/FIRST_LOAD',
-  LOADING: 'THREADS/LOADING',
-  FREEZE: 'THREADS/FREEZE',
+  LOADING: 'THREADS/LOADING'
 }
-
 
 // reducer
 export default createReducer({
@@ -32,26 +27,28 @@ function getThreads(loadNextSet=false) {
   return (dispatch, getState) => {
     const state = getState()[STATE_KEY];
     if (!state.firstLoad || loadNextSet && !state.loading && !state.freeze) {
-      const startValue = state.lastKey;
       dispatch({ type:types.LOADING, loading: true });
-      api.getThreads(startValue, threadsLimit+1)
-      .then(payload => {
-        let lastKey = getLastKey(payload);
-        dispatch({ type: types.GET_THREADS, threadsById: updateObject(state.threadsById, payload), loading: false });
-        if(lastKey === state.lastKey) {
-          dispatch({ type: types.FREEZE, freeze: true });
-        } else {
-          dispatch({ type: types.LAST_THREAD_KEY, lastKey });
-        }
-        (startValue === null) && dispatch({ type: types.FIRST_LOAD, firstLoad: true });
-        return payload;
-      })
+      api.getThreads(state.lastKey, threadsLimit+1)
+        .then(threadsById => dispatch(receiveThreads.call(state, threadsById)))
     }
   };
 }
 
 function getMoreThreads() {
   return getThreads(true);
+}
+
+function receiveThreads(threadsById) {
+  const lastKey = getLastKey(threadsById);
+  const state = this;
+  return {
+    type: types.GET_THREADS,
+    threadsById: updateObject(state.threadsById, threadsById),
+    freeze: lastKey === state.lastKey,
+    loading: false,
+    firstLoad: true,
+    lastKey
+  }
 }
 
 export const actions = {
