@@ -14,7 +14,9 @@ const types = {
 // Reducer
 export default createReducer({
   authenticated: false,
-  loading: true
+  loading: true,
+  photo: null,
+  name: null,
 }, types);
 
 // Action Creators
@@ -29,18 +31,20 @@ function listenAuthStatus() {
     removeAuthListener =
     auth.onAuthStateChanged(user => {
       if(user)
-        dispatch(signedIn());
+        dispatch(signedIn(user));
       else
         dispatch(signedOut());
     });
   }
 }
 
-function signedIn() {
+function signedIn({displayName, photoURL}) {
   return {
     type: types.SIGNED_IN,
     authenticated: true,
-    loading: false
+    loading: false,
+    name: displayName,
+    photo: photoURL
   }
 }
 
@@ -48,7 +52,9 @@ function signedOut() {
   return {
     type: types.SIGNED_OUT,
     authenticated: false,
-    loading: false
+    loading: false,
+    name: null,
+    photo: null
   }
 }
 
