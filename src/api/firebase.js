@@ -20,6 +20,10 @@ export function signInWithGoogle() {
   auth.signInWithPopup(provider);
 }
 
+export function signOut() {
+  auth.signOut();
+}
+
 export function getThreads(start, limit) {
   return new Promise((resolve, reject) => {
     let threadsRef;
