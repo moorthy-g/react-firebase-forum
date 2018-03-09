@@ -196,7 +196,8 @@ module.exports = {
     hot: enableHMR,
     historyApiFallback: true,
     compress: true,
-    stats: 'errors-only'
+    stats: 'errors-only',
+    overlay: true
   },
 
   stats: 'minimal',
