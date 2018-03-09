@@ -1,0 +1,21 @@
+.title {
+  font-weight: 300;
+  margin-bottom: 0.6em;
+}
+.container {
+  text-align: center;
+  margin: 5em 0;
+}
+.btn, .btn:hover {
+  background: #dc4a33;
+}
+.btn:before {
+  background: url('./images/icon-google.png') center center;
+  background-size: cover;
+  content: '';
+  vertical-align: text-bottom;
+  display: inline-block;
+  width: 1.2em;
+  padding-bottom: 1.2em;
+  margin-right: 0.5em;
+}

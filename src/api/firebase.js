@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/auth';
 import { reduceArrayToObject } from 'utils/helpers';
 
 const config = {
@@ -12,6 +13,12 @@ const config = {
 firebase.initializeApp(config);
 
 const db = firebase.database();
+export const auth = firebase.auth();
+
+export function signInWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider);
+}
 
 export function getThreads(start, limit) {
   return new Promise((resolve, reject) => {

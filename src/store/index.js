@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { actions } from 'components/auth';
 import rootReducer from './rootReducer';
 
 export function configureStore() {
@@ -18,6 +19,7 @@ export function configureStore() {
   }
 
   const store = createStore(rootReducer, enhancers);
+  store.dispatch(actions.listenAuthStatus());
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
