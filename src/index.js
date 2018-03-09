@@ -22,7 +22,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
         <Switch>
-          <Route path='/' exact render={ () => <Redirect to='/threads' /> }></Route>
+          <Redirect from='/' to='/threads' exact />
           <Route path='/login' exact component={Login}></Route>
           <AuthRoute path='/threads' exact component={Threads}></AuthRoute>
           <AuthRoute path='/threads/:id' exact component={SingleThread}></AuthRoute>
