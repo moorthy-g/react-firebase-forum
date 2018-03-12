@@ -7,7 +7,10 @@ export function configureStore() {
   let enhancers;
 
   if (process.env.NODE_ENV !== 'production') {
-    const logger = require('redux-logger').default;
+    const createLogger = require('redux-logger').createLogger;
+    const logger = createLogger({
+      collapsed: true
+    })
     const composeEnhancers =
       typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
