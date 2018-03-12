@@ -1,5 +1,5 @@
-import { updateObject, fetchAndNormalize, getLastKey } from 'utils/helpers';
-import { createReducer } from 'store/helpers';
+import { getLastKey } from 'utils/helpers';
+import { createReducer, updateObject } from 'store/helpers';
 import * as api from 'api/firebase';
 
 //constants

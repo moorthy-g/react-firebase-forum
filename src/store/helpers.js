@@ -1,5 +1,3 @@
-import { updateObject } from "utils/helpers";
-
 export function createReducer(initialState, actionTypes) {
   const availTypes = {};
 
@@ -14,4 +12,11 @@ export function createReducer(initialState, actionTypes) {
     else
       return state;
   }
+}
+
+
+export function updateObject(...args) {
+  let state = Object.assign({}, ...args);
+  delete state.type;
+  return state;
 }

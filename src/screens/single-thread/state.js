@@ -1,5 +1,4 @@
-import { updateObject } from 'utils/helpers';
-import { createReducer } from 'store/helpers';
+import { createReducer, updateObject } from 'store/helpers';
 import { STATE_KEY as THREADS_KEY } from 'screens/threads';
 import * as api from 'api/firebase';
 
