@@ -13,11 +13,13 @@ const config = {
 firebase.initializeApp(config);
 
 const db = firebase.database();
+
 export const auth = firebase.auth();
 
 export function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
+  auth.signInWithPopup(provider)
+    .then(result => createUser(result.user))
 }
 
 export function signOut() {
@@ -56,4 +58,14 @@ export function getPosts(threadId) {
     const postsRef = db.ref('posts').orderByChild('thread_id').equalTo(threadId);
     postsRef.once('value', snap => resolve(snap.val()));
   });
+}
+
+export function createUser(currentUser) {
+  const { photoURL, email, displayName } = currentUser;
+  return db.ref('users').child(auth.getUid()).update({
+    avatar: photoURL,
+    email: email,
+    first_name: displayName,
+    last_name: null
+  })
 }
