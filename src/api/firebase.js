@@ -69,8 +69,8 @@ export function getPosts(threadId) {
 }
 
 export function createUser(currentUser) {
-  const { photoURL, email, displayName } = currentUser;
-  return db.ref('users').child(auth.getUid()).update({
+  const { photoURL, email, displayName, uid } = currentUser;
+  return db.ref('users').child(uid).update({
     avatar: photoURL,
     email: email,
     first_name: displayName,
