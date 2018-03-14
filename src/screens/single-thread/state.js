@@ -9,6 +9,8 @@ export const STATE_KEY = 'single';
 const types = {
   GET_THREAD: 'SINGLE_THREAD/GET_THREAD',
   GET_POSTS: 'SINGLE_THREAD/GET_POSTS',
+  SUBMIT_POST: 'SINGLE_THREAD/SUBMIT_POST',
+  ADD_POST: 'SINGLE_THREAD/ADD_POST',
   LOADING: 'SINGLE_THREAD/LOADING',
   POSTS_LOADING: 'SINGLE_THREAD/POSTS_LOADING'
 }
@@ -18,7 +20,9 @@ export default createReducer({
   id: null,
   thread: {},
   posts: {},
+  postInput: '',
   postsLoading: true,
+  submitting: false,
   loading: true
 }, types);
 
@@ -61,7 +65,41 @@ function getPosts(threadId) {
   }
 }
 
+function submitPost(message) {
+  return (dispatch, getState) => {
+    const state = getState()[STATE_KEY];
+    const post = {
+      message,
+      thread_id: state.id,
+      user_id: api.auth.getUid(),
+      timestamp: api.timestamp
+    }
+    dispatch({
+      type: types.SUBMIT_POST,
+      postInput: message,
+      submitting: true
+    })
+    api.createPost(post).then(result => {
+      post.key = result.key;
+      dispatch( addPost(state, post) );
+    })
+  }
+}
+
+// action helpers
+function addPost(state, post) {
+  return {
+    type: types.ADD_POST,
+    postInput: '',
+    posts: {
+      [state.id]: [...state.posts[state.id], post]
+    },
+    submitting: false
+  }
+}
+
 export const actions = {
   getThread,
-  getPosts
+  getPosts,
+  submitPost
 };

@@ -15,6 +15,7 @@ firebase.initializeApp(config);
 const db = firebase.database();
 
 export const auth = firebase.auth();
+export const timestamp = firebase.database.ServerValue.TIMESTAMP;
 
 export function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -76,4 +77,8 @@ export function createUser(currentUser) {
     first_name: displayName,
     last_name: null
   })
+}
+
+export function createPost(postData) {
+  return db.ref('posts').push(postData);
 }

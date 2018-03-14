@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import User from 'components/user';
 import { actions, STATE_KEY } from '../state';
 import PostItem from './PostItem';
+import FormPost from './FormPost';
 import '../styles.css';
 
 class SingleThread extends Component {
@@ -23,7 +24,7 @@ class SingleThread extends Component {
     if(this.props.loading)
       return this.loaderElement();
 
-    const { id, thread, posts, postsLoading } = this.props;
+    const { id, thread, posts, postsLoading, submitPost, postInput } = this.props;
     const { title, description, user_id } = thread;
     return (
       <div>
@@ -34,6 +35,7 @@ class SingleThread extends Component {
           <User styleName="user" id={user_id} />
         </div>
         { !postsLoading && posts[id] && posts[id].map(post => <PostItem key={post.id} {...post} /> ) }
+        <FormPost submitPost={submitPost} postInput={postInput} />
       </div>
     );
   }
