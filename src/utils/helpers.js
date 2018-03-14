@@ -13,3 +13,11 @@ export function getLastKey(object) {
   for(var lastKey in object);
   return lastKey;
 }
+
+export function setDocumentTitle(title) {
+  if(typeof title === 'string') {
+    document.title = title.replace( /./, match => match.toUpperCase() );
+  } else {
+    document.title = 'React Forum';
+  }
+}

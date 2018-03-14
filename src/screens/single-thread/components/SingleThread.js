@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import User from 'components/user';
+import { setDocumentTitle } from 'utils/helpers';
 import { actions, STATE_KEY } from '../state';
 import PostItem from './PostItem';
 import FormPost from './FormPost';
@@ -21,6 +22,8 @@ class SingleThread extends Component {
     )
   }
   render() {
+    setDocumentTitle(this.props.thread.title);
+
     if(this.props.loading)
       return this.loaderElement();
 

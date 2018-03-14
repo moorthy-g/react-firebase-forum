@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signInWithGoogle, signOut } from 'api/firebase';
+import { setDocumentTitle } from 'utils/helpers';
 import { STATE_KEY } from '../state';
 import '../styles.css';
 
 class Login extends Component {
+  componentWillMount() {
+    setDocumentTitle('React Forum - Sign in');
+  }
   render() {
     return !this.props.loading ?
     (

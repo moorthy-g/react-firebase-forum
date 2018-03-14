@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { setDocumentTitle } from 'utils/helpers';
 import { actions, selectors, STATE_KEY } from '../state';
 import ThreadItem from './ThreadItem';
 
@@ -24,9 +25,13 @@ class ThreadsList extends Component {
       document.removeEventListener('scroll', this.scrollHandler);
   }
   render() {
+    setDocumentTitle();
+
     let { threadsById, usersById, limit, loading, freeze } = this.props;
+
     if(freeze)
       document.removeEventListener('scroll', this.scrollHandler);
+
     return (
       <ul className='list-group threads-list my-5'>
         {Object.keys(threadsById).map(id => {
