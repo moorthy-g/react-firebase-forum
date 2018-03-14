@@ -55,8 +55,16 @@ export function getUsersList(userIds) {
 
 export function getPosts(threadId) {
   return new Promise((resolve, reject) => {
-    const postsRef = db.ref('posts').orderByChild('thread_id').equalTo(threadId);
-    postsRef.once('value', snap => resolve(snap.val()));
+    const postsQuery = db.ref('posts').orderByChild('thread_id').equalTo(threadId);
+    postsQuery.once('value', snap => {
+      const posts = [];
+      snap.forEach(childSnap => {
+        let post = childSnap.val();
+        post.id = childSnap.key;
+        posts.push(post);
+      })
+      resolve(posts);
+    });
   });
 }
 

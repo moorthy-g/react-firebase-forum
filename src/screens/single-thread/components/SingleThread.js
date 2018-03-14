@@ -33,7 +33,7 @@ class SingleThread extends Component {
           <hr/>
           <User styleName="user" id={user_id} />
         </div>
-        { !postsLoading && posts[id] && Object.keys(posts[id]).map(key => <PostItem key={key} {...posts[id][key]} /> ) }
+        { !postsLoading && posts[id] && posts[id].map(post => <PostItem key={post.id} {...post} /> ) }
       </div>
     );
   }
