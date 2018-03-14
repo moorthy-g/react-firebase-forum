@@ -16,7 +16,7 @@ class User extends Component {
       return null;
 
     const { first_name, last_name, avatar } = user;
-    const name = `${first_name} ${last_name}`;
+    const name = last_name ? `${first_name} ${last_name}` : first_name;
     return (
       <h6 styleName="user" className={this.props.className}>
         posted by{' '}
