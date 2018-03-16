@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "9"
+branches:
+  only:
+    - master
+git:
+  depth: 1
+cache: yarn
+install:
+  - yarn install
+  - yarn global add firebase-tools
+script:
+  - yarn build
+after_success:
+  - firebase use default
+  - firebase deploy --token $FIREBASE_TOKEN --non-interactive
