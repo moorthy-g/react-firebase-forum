@@ -1,4 +1,4 @@
-# React Forum
+# React Forum ![build badge](https://travis-ci.org/moorthy-g/react-firebase-forum.svg?branch=master)
 A simple react forum application. It uses firebase realtime database & authentication features
 
 # Stack
