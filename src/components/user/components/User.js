@@ -20,10 +20,8 @@ class User extends Component {
     return (
       <h6 styleName="user" className={this.props.className}>
         posted by{' '}
-        <Link to={`user/${this.props.id}`}>
-          <strong>{name}</strong>
-          <img src={avatar} alt="" />
-        </Link>
+        <strong>{name}</strong>
+        <img src={avatar} alt="" />
       </h6>
     )
   }
